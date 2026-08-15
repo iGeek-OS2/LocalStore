@@ -1,0 +1,2 @@
+rust-core/vendor/** linguist-vendored
+rust-core/include/idevice.h linguist-generated=true

@@ -1,0 +1,45 @@
+name: LocalStore
+options:
+  # Brand reverse-DNS prefix. NOTE: this is a chosen handle only — it is NOT
+  # tied to an Apple Developer account (DEVELOPMENT_TEAM stays empty below).
+  bundleIdPrefix: dev.ondevicesigner
+  deploymentTarget:
+    # Xcode 26.x can build and launch the UI in its simulator.  The actual
+    # RPPairing/install pipeline is runtime-gated to iOS 26 in Engine.swift.
+    iOS: "26.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "0.7.0"
+    CURRENT_PROJECT_VERSION: "1"
+    TARGETED_DEVICE_FAMILY: "1,2"
+    # aws-lc-rs / idevice are arm64-only here; drop x86_64 sim slice.
+    EXCLUDED_ARCHS[sdk=iphonesimulator*]: x86_64
+    # Distribution hygiene: NO team is pinned. Whoever builds this must select
+    # their OWN signing team in Xcode (Signing & Capabilities), which signs the
+    # app with their account — never the original author's. Leave empty.
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: ""
+
+targets:
+  LocalStore:
+    type: application
+    platform: iOS
+    sources:
+      - path: ios-app
+        # The UI is code-only and uses system symbols; no inherited asset
+        # catalogue is part of the target.
+        excludes: []
+    dependencies:
+      - framework: OnDeviceCore.xcframework
+        embed: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.ondevicesigner.app
+        INFOPLIST_FILE: ios-app/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        # idevice's static lib pulls in C++ symbols (aws-lc); link libc++.
+        OTHER_LDFLAGS: "-lc++"
+        GENERATE_INFOPLIST_FILE: NO
