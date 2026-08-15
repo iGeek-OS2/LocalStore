@@ -1,21 +1,16 @@
 # LocalStore
-
-LocalStoreは、iPhoneだけでIPAを署名・インストールするためのiOSアプリです。
-Appleアカウントの2ファクタ認証、個人用署名、端末とのペアリング、インストールまでをアプリ内で行います。
+iPhone単体で個人署名でIPAをインストールするためのプロジェクト。
+Appleアカウントにサインインし、端末のペアリング、VPNの設定をして、インストールができます。
 
 ## 主な機能
-
-- 暗号化されていないIPAの読み込みと情報確認
 - Appleアカウントによる署名とインストール
-- 個人用署名アプリの一覧表示と削除
 - インストール状況とエラー内容の表示
-- 認証情報のiOSキーチェーン保存
 
-無料のAppleアカウントでは、インストール数や署名期間などApple側の制限が適用されます。
+無料のAppleアカウントでは、3つまでのインストール数や7日間の署名期間の制限がかかります。
 
 ## ビルド
 
-Xcode 26、Rust、XcodeGenが必要です。
+Xcode 26、Rust、XcodeGenが必要。。
 
 ```sh
 rustup target add aarch64-apple-ios aarch64-apple-ios-sim
@@ -24,12 +19,12 @@ xcodegen generate
 open LocalStore.xcodeproj
 ```
 
-Xcodeで自分のDevelopment Teamを選択し、実機へビルドしてください。
-`OnDeviceCore.xcframework`はリポジトリに含まれず、`build-rust.sh`で生成されます。
+Xcodeで自分のDevelopment Teamを選択して実機へビルドしてください。
+`OnDeviceCore.xcframework`はリポジトリに含まれず、`build-rust.sh`で勝手に生成されます。
 
 ## クレジット
 
-認証・署名・RPPairing・端末通信の基盤には、
+全体的なインストールの仕組みは、
 [SideInstaller by FrizzleM](https://github.com/FrizzleM/SideInstaller)由来のコードを使用しています。
 
 利用条件は[LICENSE.md](LICENSE.md)、主な変更点は[CHANGES.md](CHANGES.md)、
