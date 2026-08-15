@@ -1,7 +1,7 @@
-# Third-party notices
+# 第三者ライセンス
 
-LocalStore vendors modified source from the following projects. The local
-patches are documented in each vendored directory's `README.md`.
+LocalStoreには、以下のプロジェクトを一部変更したソースコードが含まれています。
+ライセンス本文は原文のまま掲載しています。
 
 ## idevice and idevice-ffi
 
